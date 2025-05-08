@@ -21,10 +21,12 @@
     ========================================================================
 */
 #include <stdio.h>
+#include <string.h>
 #define STACK_SIZE 50 // 최대 스택 크기
 
 int     call_stack[STACK_SIZE];         // Call Stack을 저장하는 배열
 char    stack_info[STACK_SIZE][20];     // Call Stack 요소에 대한 설명을 저장하는 배열
+char    stack_info_list[STACK_SIZE][20] = {"arg1", "arg2", "arg3", "Return Address", "var_1", "var_2", "var_3", "var_4", "Func1 SFP", "Func2 SFP", };
 
 /*  SP (Stack Pointer), FP (Frame Pointer)
 
@@ -40,6 +42,8 @@ int FP = -1;
 void func1(int arg1, int arg2, int arg3);
 void func2(int arg1, int arg2);
 void func3(int arg1);
+
+
 
 /*
     현재 call_stack 전체를 출력합니다.
@@ -77,8 +81,31 @@ void print_stack(void)
 void func1(int arg1, int arg2, int arg3)
 {
     int var_1 = 100;
-
+    
     // func1의 스택 프레임 형성 (함수 프롤로그 + push)
+    // 인자 push
+    for (int i = 3; i > 0; i--) {
+        SP += 1;
+        call_stack[SP] = i;
+        strcpy(stack_info[SP], stack_info_list[i-1]);
+    }
+    
+    // 반환 주소값
+    SP += 1;
+    call_stack[SP] = -1;
+    strcpy(stack_info[SP], stack_info_list[3]);
+    
+    // SFP push
+    SP += 1;
+    call_stack[SP] = -1;
+    strcpy(stack_info[SP], stack_info_list[8]);
+    FP = SP;
+    
+    // 지역변수
+    SP += 1;
+    call_stack[SP] = var_1;
+    strcpy(stack_info[SP], stack_info_list[4]);
+    
     print_stack();
     func2(11, 13);
     // func2의 스택 프레임 제거 (함수 에필로그 + pop)
