@@ -214,7 +214,21 @@ void func3(int arg1)
 int main(void)
 {
     func1(1, 2, 3);
+    
     // func1의 스택 프레임 제거 (함수 에필로그 + pop)
+    // 지역변수 및 SFP를 통한 FP 수정
+    SP = FP;
+    FP = call_stack[SP];
+    SP -= 1;
+    
+    // Return Address pop
+    call_stack[SP] = 0;
+    strcpy(stack_info[SP], "");
+    SP -= 1;
+    
+    // func1 인자 제거
+    SP -= 3;
+    
     print_stack();
     return 0;
 }
