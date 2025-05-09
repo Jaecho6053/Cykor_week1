@@ -118,6 +118,30 @@ void func2(int arg1, int arg2)
     int var_2 = 200;
 
     // func2의 스택 프레임 형성 (함수 프롤로그 + push)
+    // 인자 push
+    SP += 1;
+    call_stack[SP] = 13;
+    strcpy(stack_info[SP], stack_info_list[1]);
+    SP += 1;
+    call_stack[SP] = 11;
+    strcpy(stack_info[SP], stack_info_list[0]);
+    
+    // 반환 주소값
+    SP += 1;
+    call_stack[SP] = -1;
+    strcpy(stack_info[SP], stack_info_list[3]);
+    
+    // SFP push
+    SP += 1;
+    call_stack[SP] = FP;
+    strcpy(stack_info[SP], stack_info_list[9]);
+    FP = SP;
+    
+    // 지역변수
+    SP += 1;
+    call_stack[SP] = var_2;
+    strcpy(stack_info[SP], stack_info_list[4]);
+    
     print_stack();
     func3(77);
     // func3의 스택 프레임 제거 (함수 에필로그 + pop)
