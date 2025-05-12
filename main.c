@@ -26,7 +26,7 @@
 
 int     call_stack[STACK_SIZE];         // Call Stack을 저장하는 배열
 char    stack_info[STACK_SIZE][20];     // Call Stack 요소에 대한 설명을 저장하는 배열
-char    stack_info_list[STACK_SIZE][20] = {"arg1", "arg2", "arg3", "Return Address", "var_1", "var_2", "var_3", "var_4", "Func1 SFP", "Func2 SFP", };
+char    stack_info_list[STACK_SIZE][20] = {"arg1", "arg2", "arg3", "Return Address", "var_1", "var_2", "var_3", "var_4", "Func1 SFP", "Func2 SFP", "Func3 SFP" };
 
 /*  SP (Stack Pointer), FP (Frame Pointer)
 
@@ -116,8 +116,6 @@ void func1(int arg1, int arg2, int arg3)
     SP -= 1;
     
     // Return Address pop
-    call_stack[SP] = 0;
-    strcpy(stack_info[SP], "");
     SP -= 1;
     
     // func2 인자 제거
@@ -166,8 +164,6 @@ void func2(int arg1, int arg2)
     SP -= 1;
     
     // Return Address pop
-    call_stack[SP] = 0;
-    strcpy(stack_info[SP], "");
     SP -= 1;
     
     // func3 인자 제거
@@ -196,7 +192,7 @@ void func3(int arg1)
     // SFP push
     SP += 1;
     call_stack[SP] = FP;
-    strcpy(stack_info[SP], stack_info_list[9]);
+    strcpy(stack_info[SP], stack_info_list[10]);
     FP = SP;
     
     // 지역변수
@@ -222,8 +218,6 @@ int main(void)
     SP -= 1;
     
     // Return Address pop
-    call_stack[SP] = 0;
-    strcpy(stack_info[SP], "");
     SP -= 1;
     
     // func1 인자 제거
